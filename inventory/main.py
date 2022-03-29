@@ -1,8 +1,15 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from redis_om import get_redis_connection, HashModel
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['http://localhost:3000'],
+    allow_methods=['*'],
+    allow_headers=['*']
+)
 
 redis = get_redis_connection(
     host="redis-13289.c52.us-east-1-4.ec2.cloud.redislabs.com",
