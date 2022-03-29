@@ -1,7 +1,18 @@
+from ctypes import cast
 from itertools import product
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from redis_om import get_redis_connection, HashModel
+from decouple import config
+from unipath import Path
+
+
+BASE_DIR = Path(__file__).parent
+
+HOST = config('HOST')
+PORT = config('PORT')
+PASSWORD = config('PASSWORD')
+DECODE_RESPONSES = config("DECODE_RESPONSES")
 
 app = FastAPI()
 
@@ -13,10 +24,10 @@ app.add_middleware(
 )
 
 redis = get_redis_connection(
-    host="redis-13289.c52.us-east-1-4.ec2.cloud.redislabs.com",
-    port=13289,
-    password="nvzAKvSgwYYNbv17slBby8MMIH0JOi6q",
-    decode_responses=True
+    host=config('HOST', cast=str),
+    port=config('PORT', cast=int),
+    password=config('PASSWORD', cast=str),
+    decode_responses=config("DECODE_RESPONSES", cast=bool)
 )
 
 class Product(HashModel):

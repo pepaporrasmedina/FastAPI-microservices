@@ -3,3 +3,6 @@
 .DS_Store
 *.ico
 *.jpeg
+*.pyc
+.env
+inventory/__pycache__
