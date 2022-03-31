@@ -82,6 +82,8 @@ def order_completed(order: Order):
     order.status = 'completed'
     order.save()
 
+    redis.xadd('order_completed', order.dict(), '*') #using Redis streams
+
 
 ## if a Error :redis.exceptions.ConnectionError: Error 61 connecting to localhost:6379. Connection refused. happens porceed to install redis and run redis-server
 
